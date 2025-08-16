@@ -1,0 +1,1124 @@
+openapi: 3.0.0
+info:
+  title: Discovered API
+  description: API specification reverse-engineered from HAR analysis
+  version: 1.0.0
+  x-jentic-source-url: https://services3.arcgis.com
+servers:
+- url: https://services3.arcgis.com
+  description: API server discovered from HAR analysis
+paths:
+  /sharing/rest/oauth2/platformSelf:
+    post:
+      summary: POST /sharing/rest/oauth2/platformSelf
+      description: Endpoint discovered from HAR analysis (5 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+      parameters:
+      - name: f
+        in: query
+        required: false
+        schema:
+          type: string
+        example: json
+        description: Parameter discovered in HAR analysis
+  /sharing/rest/portals/dQsP3byyKkTT53Ep:
+    get:
+      summary: GET /sharing/rest/portals/dQsP3byyKkTT53Ep
+      description: Endpoint discovered from HAR analysis (1 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+      parameters:
+      - name: f
+        in: query
+        required: false
+        schema:
+          type: string
+        example: json
+        description: Parameter discovered in HAR analysis
+  /sharing/rest/portals/dQsP3byyKkTT53Ep/settings:
+    get:
+      summary: GET /sharing/rest/portals/dQsP3byyKkTT53Ep/settings
+      description: Endpoint discovered from HAR analysis (1 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+      parameters:
+      - name: f
+        in: query
+        required: false
+        schema:
+          type: string
+        example: json
+        description: Parameter discovered in HAR analysis
+  /sharing/rest/community/users/undefined/invitations:
+    get:
+      summary: GET /sharing/rest/community/users/undefined/invitations
+      description: Endpoint discovered from HAR analysis (1 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+      parameters:
+      - name: f
+        in: query
+        required: false
+        schema:
+          type: string
+        example: json
+        description: Parameter discovered in HAR analysis
+  /sharing/rest/content/items/{id}:
+    get:
+      summary: GET /sharing/rest/content/items/{id}
+      description: Endpoint discovered from HAR analysis (17 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+      parameters:
+      - name: f
+        in: query
+        required: false
+        schema:
+          type: string
+        example: json
+        description: Parameter discovered in HAR analysis
+  /opendata-ui/assets/stencil-components/locales/arcgis-privacy.i18n.en.json:
+    get:
+      summary: GET /opendata-ui/assets/stencil-components/locales/arcgis-privacy.i18n.en.json
+      description: Endpoint discovered from HAR analysis (1 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+  /opendata-ui/assets/stencil-components/locales/arcgis-hub-keyboard-shortcuts.i18n.en.json:
+    get:
+      summary: GET /opendata-ui/assets/stencil-components/locales/arcgis-hub-keyboard-shortcuts.i18n.en.json
+      description: Endpoint discovered from HAR analysis (1 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+  /opendata-ui/assets/stencil-components/locales/arcgis-hub-notice.i18n.en.json:
+    get:
+      summary: GET /opendata-ui/assets/stencil-components/locales/arcgis-hub-notice.i18n.en.json
+      description: Endpoint discovered from HAR analysis (2 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+  /opendata-ui/assets/stencil-components/locales/arcgis-hub-download-manager.i18n.en.json:
+    get:
+      summary: GET /opendata-ui/assets/stencil-components/locales/arcgis-hub-download-manager.i18n.en.json
+      description: Endpoint discovered from HAR analysis (1 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+  /opendata-ui/assets/stencil-components/locales/arcgis-hub-feeds-list.i18n.en.json:
+    get:
+      summary: GET /opendata-ui/assets/stencil-components/locales/arcgis-hub-feeds-list.i18n.en.json
+      description: Endpoint discovered from HAR analysis (1 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+  /api/v3/datasets:
+    get:
+      summary: GET /api/v3/datasets
+      description: Endpoint discovered from HAR analysis (2 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+      parameters:
+      - name: filter%5Bid%5D
+        in: query
+        required: false
+        schema:
+          type: string
+        example: 36136945d4f04348920d2f062ae3a311
+        description: Parameter discovered in HAR analysis
+      - name: page%5Bsize%5D
+        in: query
+        required: false
+        schema:
+          type: string
+        example: '1'
+        description: Parameter discovered in HAR analysis
+  /opendata-ui/assets/calcite-components/3.2.1/assets/dialog/t9n/messages.en.json:
+    get:
+      summary: GET /opendata-ui/assets/calcite-components/3.2.1/assets/dialog/t9n/messages.en.json
+      description: Endpoint discovered from HAR analysis (1 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+  /opendata-ui/assets/stencil-components/locales/arcgis-shareable-card.i18n.en.json:
+    get:
+      summary: GET /opendata-ui/assets/stencil-components/locales/arcgis-shareable-card.i18n.en.json
+      description: Endpoint discovered from HAR analysis (8 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+  /opendata-ui/assets/stencil-components/locales/arcgis-copyable-input.i18n.en.json:
+    get:
+      summary: GET /opendata-ui/assets/stencil-components/locales/arcgis-copyable-input.i18n.en.json
+      description: Endpoint discovered from HAR analysis (4 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+  /opendata-ui/assets/calcite-components/3.2.1/assets/modal/t9n/messages.en.json:
+    get:
+      summary: GET /opendata-ui/assets/calcite-components/3.2.1/assets/modal/t9n/messages.en.json
+      description: Endpoint discovered from HAR analysis (1 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+  /opendata-ui/assets/calcite-components/3.2.1/assets/scrim/t9n/messages.en.json:
+    get:
+      summary: GET /opendata-ui/assets/calcite-components/3.2.1/assets/scrim/t9n/messages.en.json
+      description: Endpoint discovered from HAR analysis (1 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+  /opendata-ui/assets/calcite-components/3.2.1/assets/icon/launch16.json:
+    get:
+      summary: GET /opendata-ui/assets/calcite-components/3.2.1/assets/icon/launch16.json
+      description: Endpoint discovered from HAR analysis (1 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+  /opendata-ui/assets/calcite-components/3.2.1/assets/icon/x16.json:
+    get:
+      summary: GET /opendata-ui/assets/calcite-components/3.2.1/assets/icon/x16.json
+      description: Endpoint discovered from HAR analysis (1 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+  /opendata-ui/assets/calcite-components/3.2.1/assets/button/t9n/messages.en.json:
+    get:
+      summary: GET /opendata-ui/assets/calcite-components/3.2.1/assets/button/t9n/messages.en.json
+      description: Endpoint discovered from HAR analysis (1 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+  /opendata-ui/assets/calcite-components/3.2.1/assets/panel/t9n/messages.en.json:
+    get:
+      summary: GET /opendata-ui/assets/calcite-components/3.2.1/assets/panel/t9n/messages.en.json
+      description: Endpoint discovered from HAR analysis (1 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+  /opendata-ui/assets/calcite-components/3.2.1/assets/notice/t9n/messages.en.json:
+    get:
+      summary: GET /opendata-ui/assets/calcite-components/3.2.1/assets/notice/t9n/messages.en.json
+      description: Endpoint discovered from HAR analysis (1 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+  /opendata-ui/assets/calcite-components/3.2.1/assets/action/t9n/messages.en.json:
+    get:
+      summary: GET /opendata-ui/assets/calcite-components/3.2.1/assets/action/t9n/messages.en.json
+      description: Endpoint discovered from HAR analysis (1 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+  /opendata-ui/assets/calcite-components/3.2.1/assets/input/t9n/messages.en.json:
+    get:
+      summary: GET /opendata-ui/assets/calcite-components/3.2.1/assets/input/t9n/messages.en.json
+      description: Endpoint discovered from HAR analysis (1 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+  /opendata-ui/assets/calcite-components/3.2.1/assets/popover/t9n/messages.en.json:
+    get:
+      summary: GET /opendata-ui/assets/calcite-components/3.2.1/assets/popover/t9n/messages.en.json
+      description: Endpoint discovered from HAR analysis (1 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+  /sharing/rest/portals/self:
+    get:
+      summary: GET /sharing/rest/portals/self
+      description: Endpoint discovered from HAR analysis (4 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+      parameters:
+      - name: f
+        in: query
+        required: false
+        schema:
+          type: string
+        example: json
+        description: Parameter discovered in HAR analysis
+      - name: culture
+        in: query
+        required: false
+        schema:
+          type: string
+        example: en-us
+        description: Parameter discovered in HAR analysis
+  /sharing/rest/community/groups:
+    get:
+      summary: GET /sharing/rest/community/groups
+      description: Endpoint discovered from HAR analysis (2 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+      parameters:
+      - name: f
+        in: query
+        required: false
+        schema:
+          type: string
+        example: json
+        description: Parameter discovered in HAR analysis
+      - name: q
+        in: query
+        required: false
+        schema:
+          type: string
+        example: title%3A%22LAW%20Search%22%20AND%20owner%3AEsri_LivingAtlas
+        description: Parameter discovered in HAR analysis
+      - name: num
+        in: query
+        required: false
+        schema:
+          type: string
+        example: '1'
+        description: Parameter discovered in HAR analysis
+      - name: sortField
+        in: query
+        required: false
+        schema:
+          type: string
+        example: title
+        description: Parameter discovered in HAR analysis
+      - name: sortOrder
+        in: query
+        required: false
+        schema:
+          type: string
+        example: asc
+        description: Parameter discovered in HAR analysis
+  /dbcdn/1BE0A01/assets/t9n/en.json:
+    get:
+      summary: GET /dbcdn/1BE0A01/assets/t9n/en.json
+      description: Endpoint discovered from HAR analysis (2 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+  /sharing/rest/content/items/{id}/data:
+    get:
+      summary: GET /sharing/rest/content/items/{id}/data
+      description: Endpoint discovered from HAR analysis (12 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+      parameters:
+      - name: f
+        in: query
+        required: false
+        schema:
+          type: string
+        example: json
+        description: Parameter discovered in HAR analysis
+  /sharing/rest/content/items/{id}/resources:
+    get:
+      summary: GET /sharing/rest/content/items/{id}/resources
+      description: Endpoint discovered from HAR analysis (2 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+      parameters:
+      - name: f
+        in: query
+        required: false
+        schema:
+          type: string
+        example: json
+        description: Parameter discovered in HAR analysis
+      - name: start
+        in: query
+        required: false
+        schema:
+          type: string
+        example: '1'
+        description: Parameter discovered in HAR analysis
+      - name: num
+        in: query
+        required: false
+        schema:
+          type: string
+        example: '10'
+        description: Parameter discovered in HAR analysis
+      - name: sortOrder
+        in: query
+        required: false
+        schema:
+          type: string
+        example: asc
+        description: Parameter discovered in HAR analysis
+      - name: sortField
+        in: query
+        required: false
+        schema:
+          type: string
+        example: resource
+        description: Parameter discovered in HAR analysis
+  /sharing/rest/content/items/{id}/resources/themes/user.json:
+    get:
+      summary: GET /sharing/rest/content/items/{id}/resources/themes/user.json
+      description: Endpoint discovered from HAR analysis (1 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+      parameters:
+      - name: f
+        in: query
+        required: false
+        schema:
+          type: string
+        example: json
+        description: Parameter discovered in HAR analysis
+  /dQsP3byyKkTT53Ep/arcgis/rest/services/IDHUB_SummaryMaster_L/FeatureServer:
+    get:
+      summary: GET /dQsP3byyKkTT53Ep/arcgis/rest/services/IDHUB_SummaryMaster_L/FeatureServer
+      description: Endpoint discovered from HAR analysis (6 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+      parameters:
+      - name: f
+        in: query
+        required: false
+        schema:
+          type: string
+        example: json
+        description: Parameter discovered in HAR analysis
+  /dQsP3byyKkTT53Ep/arcgis/rest/services/IDHUB_Summary_Age_L/FeatureServer:
+    get:
+      summary: GET /dQsP3byyKkTT53Ep/arcgis/rest/services/IDHUB_Summary_Age_L/FeatureServer
+      description: Endpoint discovered from HAR analysis (3 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+      parameters:
+      - name: f
+        in: query
+        required: false
+        schema:
+          type: string
+        example: json
+        description: Parameter discovered in HAR analysis
+  /dQsP3byyKkTT53Ep/arcgis/rest/services/IDHUB_AllCasesTS_L_View_ND_SummaryDash/FeatureServer:
+    get:
+      summary: GET /dQsP3byyKkTT53Ep/arcgis/rest/services/IDHUB_AllCasesTS_L_View_ND_SummaryDash/FeatureServer
+      description: Endpoint discovered from HAR analysis (3 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+      parameters:
+      - name: f
+        in: query
+        required: false
+        schema:
+          type: string
+        example: json
+        description: Parameter discovered in HAR analysis
+  /dQsP3byyKkTT53Ep/arcgis/rest/services/IDHUB_SummaryMaster_L_HealthAreaView/FeatureServer:
+    get:
+      summary: GET /dQsP3byyKkTT53Ep/arcgis/rest/services/IDHUB_SummaryMaster_L_HealthAreaView/FeatureServer
+      description: Endpoint discovered from HAR analysis (3 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+      parameters:
+      - name: f
+        in: query
+        required: false
+        schema:
+          type: string
+        example: json
+        description: Parameter discovered in HAR analysis
+  /dQsP3byyKkTT53Ep/arcgis/rest/services/IDHUB_SummaryMaster_L/FeatureServer/{id}:
+    get:
+      summary: GET /dQsP3byyKkTT53Ep/arcgis/rest/services/IDHUB_SummaryMaster_L/FeatureServer/{id}
+      description: Endpoint discovered from HAR analysis (2 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+      parameters:
+      - name: f
+        in: query
+        required: false
+        schema:
+          type: string
+        example: json
+        description: Parameter discovered in HAR analysis
+  /dQsP3byyKkTT53Ep/arcgis/rest/services/IDHUB_SummaryMaster_L/FeatureServer/{id}/query:
+    get:
+      summary: GET /dQsP3byyKkTT53Ep/arcgis/rest/services/IDHUB_SummaryMaster_L/FeatureServer/{id}/query
+      description: Endpoint discovered from HAR analysis (47 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+      parameters:
+      - name: f
+        in: query
+        required: false
+        schema:
+          type: string
+        example: pbf
+        description: Parameter discovered in HAR analysis
+      - name: cacheHint
+        in: query
+        required: false
+        schema:
+          type: string
+        example: 'true'
+        description: Parameter discovered in HAR analysis
+      - name: resultOffset
+        in: query
+        required: false
+        schema:
+          type: string
+        example: '0'
+        description: Parameter discovered in HAR analysis
+      - name: resultRecordCount
+        in: query
+        required: false
+        schema:
+          type: string
+        example: '1'
+        description: Parameter discovered in HAR analysis
+      - name: where
+        in: query
+        required: false
+        schema:
+          type: string
+        example: 1%3D1
+        description: Parameter discovered in HAR analysis
+      - name: orderByFields
+        in: query
+        required: false
+        schema:
+          type: string
+        example: ''
+        description: Parameter discovered in HAR analysis
+      - name: outFields
+        in: query
+        required: false
+        schema:
+          type: string
+        example: '*'
+        description: Parameter discovered in HAR analysis
+      - name: resultType
+        in: query
+        required: false
+        schema:
+          type: string
+        example: standard
+        description: Parameter discovered in HAR analysis
+      - name: returnGeometry
+        in: query
+        required: false
+        schema:
+          type: string
+        example: 'false'
+        description: Parameter discovered in HAR analysis
+      - name: spatialRel
+        in: query
+        required: false
+        schema:
+          type: string
+        example: esriSpatialRelIntersects
+        description: Parameter discovered in HAR analysis
+  /dbcdn/1BE0A01/assets/calcite/assets/panel/t9n/messages.en.json:
+    get:
+      summary: GET /dbcdn/1BE0A01/assets/calcite/assets/panel/t9n/messages.en.json
+      description: Endpoint discovered from HAR analysis (2 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+  /dbcdn/1BE0A01/assets/calcite/assets/action/t9n/messages.en.json:
+    get:
+      summary: GET /dbcdn/1BE0A01/assets/calcite/assets/action/t9n/messages.en.json
+      description: Endpoint discovered from HAR analysis (2 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+  /dbcdn/1BE0A01/assets/calcite/assets/popover/t9n/messages.en.json:
+    get:
+      summary: GET /dbcdn/1BE0A01/assets/calcite/assets/popover/t9n/messages.en.json
+      description: Endpoint discovered from HAR analysis (2 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+  /dQsP3byyKkTT53Ep/arcgis/rest/services/IDHUB_AllCasesTS_L_View_ND_SummaryDash/FeatureServer/{id}:
+    get:
+      summary: GET /dQsP3byyKkTT53Ep/arcgis/rest/services/IDHUB_AllCasesTS_L_View_ND_SummaryDash/FeatureServer/{id}
+      description: Endpoint discovered from HAR analysis (1 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+      parameters:
+      - name: f
+        in: query
+        required: false
+        schema:
+          type: string
+        example: json
+        description: Parameter discovered in HAR analysis
+  /dQsP3byyKkTT53Ep/arcgis/rest/services/IDHUB_Summary_Age_L/FeatureServer/{id}:
+    get:
+      summary: GET /dQsP3byyKkTT53Ep/arcgis/rest/services/IDHUB_Summary_Age_L/FeatureServer/{id}
+      description: Endpoint discovered from HAR analysis (1 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+      parameters:
+      - name: f
+        in: query
+        required: false
+        schema:
+          type: string
+        example: json
+        description: Parameter discovered in HAR analysis
+  /dQsP3byyKkTT53Ep/arcgis/rest/services/IDHUB_SummaryMaster_L_HealthAreaView/FeatureServer/{id}:
+    get:
+      summary: GET /dQsP3byyKkTT53Ep/arcgis/rest/services/IDHUB_SummaryMaster_L_HealthAreaView/FeatureServer/{id}
+      description: Endpoint discovered from HAR analysis (1 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+      parameters:
+      - name: f
+        in: query
+        required: false
+        schema:
+          type: string
+        example: json
+        description: Parameter discovered in HAR analysis
+  /dbcdn/1BE0A01/assets/arcgis-charts-components/assets/common/t9n/messages.en.json:
+    get:
+      summary: GET /dbcdn/1BE0A01/assets/arcgis-charts-components/assets/common/t9n/messages.en.json
+      description: Endpoint discovered from HAR analysis (1 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+  /dbcdn/1BE0A01/assets/arcgis-charts-components/assets/errors/t9n/messages.en.json:
+    get:
+      summary: GET /dbcdn/1BE0A01/assets/arcgis-charts-components/assets/errors/t9n/messages.en.json
+      description: Endpoint discovered from HAR analysis (1 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+  /dbcdn/1BE0A01/assets/calcite/assets/button/t9n/messages.en.json:
+    get:
+      summary: GET /dbcdn/1BE0A01/assets/calcite/assets/button/t9n/messages.en.json
+      description: Endpoint discovered from HAR analysis (1 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+  /dQsP3byyKkTT53Ep/arcgis/rest/services/IDHUB_Summary_Age_L/FeatureServer/{id}/query:
+    get:
+      summary: GET /dQsP3byyKkTT53Ep/arcgis/rest/services/IDHUB_Summary_Age_L/FeatureServer/{id}/query
+      description: Endpoint discovered from HAR analysis (9 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+      parameters:
+      - name: f
+        in: query
+        required: false
+        schema:
+          type: string
+        example: json
+        description: Parameter discovered in HAR analysis
+      - name: cacheHint
+        in: query
+        required: false
+        schema:
+          type: string
+        example: 'true'
+        description: Parameter discovered in HAR analysis
+      - name: groupByFieldsForStatistics
+        in: query
+        required: false
+        schema:
+          type: string
+        example: Cat%2CSort_Col
+        description: Parameter discovered in HAR analysis
+      - name: maxRecordCountFactor
+        in: query
+        required: false
+        schema:
+          type: string
+        example: '5'
+        description: Parameter discovered in HAR analysis
+      - name: resultRecordCount
+        in: query
+        required: false
+        schema:
+          type: string
+        example: '10001'
+        description: Parameter discovered in HAR analysis
+      - name: where
+        in: query
+        required: false
+        schema:
+          type: string
+        example: (SubCat%3C%3E%27Unk%27)%20AND%20(location%3D%27Ireland%27)%20AND%20(disease%3D%27Bacterial%20meningitis%20(not%20otherwise%20specified)%27)
+        description: Parameter discovered in HAR analysis
+      - name: orderByFields
+        in: query
+        required: false
+        schema:
+          type: string
+        example: Cat%20ASC
+        description: Parameter discovered in HAR analysis
+      - name: outFields
+        in: query
+        required: false
+        schema:
+          type: string
+        example: '*'
+        description: Parameter discovered in HAR analysis
+      - name: outStatistics
+        in: query
+        required: false
+        schema:
+          type: string
+        example: '%5B%7B%22onStatisticField%22%3A%22Value%22%2C%22outStatisticFieldName%22%3A%22arcgis_charts_outStatisticFieldName_default_key%22%2C%22statisticType%22%3A%22sum%22%7D%5D'
+        description: Parameter discovered in HAR analysis
+      - name: returnGeometry
+        in: query
+        required: false
+        schema:
+          type: string
+        example: 'false'
+        description: Parameter discovered in HAR analysis
+      - name: spatialRel
+        in: query
+        required: false
+        schema:
+          type: string
+        example: esriSpatialRelIntersects
+        description: Parameter discovered in HAR analysis
+  /dQsP3byyKkTT53Ep/arcgis/rest/services/IDHUB_SummaryMaster_L_HealthAreaView/FeatureServer/{id}/query:
+    get:
+      summary: GET /dQsP3byyKkTT53Ep/arcgis/rest/services/IDHUB_SummaryMaster_L_HealthAreaView/FeatureServer/{id}/query
+      description: Endpoint discovered from HAR analysis (6 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+      parameters:
+      - name: f
+        in: query
+        required: false
+        schema:
+          type: string
+        example: json
+        description: Parameter discovered in HAR analysis
+      - name: returnIdsOnly
+        in: query
+        required: false
+        schema:
+          type: string
+        example: 'true'
+        description: Parameter discovered in HAR analysis
+      - name: returnCountOnly
+        in: query
+        required: false
+        schema:
+          type: string
+        example: 'true'
+        description: Parameter discovered in HAR analysis
+      - name: cacheHint
+        in: query
+        required: false
+        schema:
+          type: string
+        example: 'true'
+        description: Parameter discovered in HAR analysis
+      - name: outFields
+        in: query
+        required: false
+        schema:
+          type: string
+        example: location
+        description: Parameter discovered in HAR analysis
+      - name: returnDistinctValues
+        in: query
+        required: false
+        schema:
+          type: string
+        example: 'true'
+        description: Parameter discovered in HAR analysis
+      - name: returnGeometry
+        in: query
+        required: false
+        schema:
+          type: string
+        example: 'false'
+        description: Parameter discovered in HAR analysis
+      - name: spatialRel
+        in: query
+        required: false
+        schema:
+          type: string
+        example: esriSpatialRelIntersects
+        description: Parameter discovered in HAR analysis
+      - name: where
+        in: query
+        required: false
+        schema:
+          type: string
+        example: (location%3C%3E%27Ireland%27%20AND%20location%3C%3E%27Unknown%27)%20AND%20(disease%3D%27Bacterial%20meningitis%20(not%20otherwise%20specified)%27)
+        description: Parameter discovered in HAR analysis
+  /dQsP3byyKkTT53Ep/arcgis/rest/services/IDHUB_AllCasesTS_L_View_ND_SummaryDash/FeatureServer/{id}/query:
+    get:
+      summary: GET /dQsP3byyKkTT53Ep/arcgis/rest/services/IDHUB_AllCasesTS_L_View_ND_SummaryDash/FeatureServer/{id}/query
+      description: Endpoint discovered from HAR analysis (12 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+      parameters:
+      - name: f
+        in: query
+        required: false
+        schema:
+          type: string
+        example: json
+        description: Parameter discovered in HAR analysis
+      - name: returnIdsOnly
+        in: query
+        required: false
+        schema:
+          type: string
+        example: 'true'
+        description: Parameter discovered in HAR analysis
+      - name: returnCountOnly
+        in: query
+        required: false
+        schema:
+          type: string
+        example: 'true'
+        description: Parameter discovered in HAR analysis
+      - name: cacheHint
+        in: query
+        required: false
+        schema:
+          type: string
+        example: 'true'
+        description: Parameter discovered in HAR analysis
+      - name: outFields
+        in: query
+        required: false
+        schema:
+          type: string
+        example: YearWeek
+        description: Parameter discovered in HAR analysis
+      - name: returnDistinctValues
+        in: query
+        required: false
+        schema:
+          type: string
+        example: 'true'
+        description: Parameter discovered in HAR analysis
+      - name: returnGeometry
+        in: query
+        required: false
+        schema:
+          type: string
+        example: 'false'
+        description: Parameter discovered in HAR analysis
+      - name: spatialRel
+        in: query
+        required: false
+        schema:
+          type: string
+        example: esriSpatialRelIntersects
+        description: Parameter discovered in HAR analysis
+      - name: where
+        in: query
+        required: false
+        schema:
+          type: string
+        example: (Cat%3D%27total%27%20AND%20Format%3D%27Weekly%20Number%20of%20Cases%27)%20AND%20(location%3D%27Ireland%27)%20AND%20(Disease%3D%27Bacterial%20meningitis%20(not%20otherwise%20specified)%27)
+        description: Parameter discovered in HAR analysis
+  /dbcdn/1BE0A01/assets/calcite/assets/icon/blank16.json:
+    get:
+      summary: GET /dbcdn/1BE0A01/assets/calcite/assets/icon/blank16.json
+      description: Endpoint discovered from HAR analysis (1 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+  /dbcdn/1BE0A01/assets/calcite/assets/icon/caretRight16.json:
+    get:
+      summary: GET /dbcdn/1BE0A01/assets/calcite/assets/icon/caretRight16.json
+      description: Endpoint discovered from HAR analysis (1 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+  /dbcdn/1BE0A01/assets/calcite/assets/icon/caretLeft16.json:
+    get:
+      summary: GET /dbcdn/1BE0A01/assets/calcite/assets/icon/caretLeft16.json
+      description: Endpoint discovered from HAR analysis (1 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+components:
+  schemas: {}
+  securitySchemes: {}

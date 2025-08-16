@@ -1,0 +1,392 @@
+openapi: 3.0.3
+info:
+  title: HPSC Notifiable Disease – ArcGIS API
+  description: >
+    Reverse-engineered from HAR captures of notifiabledisease.hpsc.ie.
+    Includes ArcGIS content metadata and FeatureServer query endpoints.
+  version: "1.0.0"
+  x-jentic-source-url: "https://notifiabledisease.hpsc.ie/"
+
+# Put arcgis.com first so runners that default to the 1st server call portal endpoints correctly.
+servers:
+  - url: https://www.arcgis.com
+    description: ArcGIS item/portal metadata
+  - url: https://services3.arcgis.com
+    description: ArcGIS services (Feature/Map Server)
+
+paths:
+  /sharing/rest/search:
+    servers:
+      - url: https://www.arcgis.com
+    get:
+      summary: Search ArcGIS items
+      description: ArcGIS Portal search API.
+      operationId: searchItems
+      parameters:
+        - in: query
+          name: q
+          required: true
+          schema: { type: string }
+          description: Search query (e.g., "type:Dashboard", "test")
+        - in: query
+          name: num
+          schema: { type: integer, minimum: 1, maximum: 100 }
+          example: 10
+          description: Page size (default 10, max 100).
+        - in: query
+          name: start
+          schema: { type: integer, minimum: 1 }
+          example: 1
+          description: 1-based index of first result in the page.
+        - in: query
+          name: f
+          schema: { type: string, enum: [json] }
+          example: json
+          description: Response format.
+      responses:
+        "200":
+          description: Search results
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                properties:
+                  query: { type: string }
+                  total: { type: integer }
+                  start: { type: integer }
+                  num: { type: integer }
+                  nextStart: { type: integer }
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      additionalProperties: true
+
+  /sharing/rest/content/items/{itemId}:
+    servers:
+      - url: https://www.arcgis.com
+    get:
+      summary: Get ArcGIS item metadata
+      operationId: getItemMetadata
+      parameters:
+        - in: path
+          name: itemId
+          required: true
+          schema: { type: string }
+          description: ArcGIS item ID (hex-like).
+        - in: query
+          name: f
+          schema: { type: string, enum: [json] }
+          example: json
+      responses:
+        "200":
+          description: Item metadata
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ArcgisItem"
+
+  /sharing/rest/content/items/{itemId}/data:
+    servers:
+      - url: https://www.arcgis.com
+    get:
+      summary: Get ArcGIS item data/config
+      operationId: getItemData
+      parameters:
+        - in: path
+          name: itemId
+          required: true
+          schema: { type: string }
+        - in: query
+          name: f
+          schema: { type: string, enum: [json] }
+          example: json
+      responses:
+        "200":
+          description: Item data (dashboard configuration JSON)
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+
+  # ---- Original fixed-org FeatureServer endpoints (dQsP3byyKkTT53Ep) ----
+  /dQsP3byyKkTT53Ep/arcgis/rest/services/{servicePath}/FeatureServer/{layerId}:
+    servers:
+      - url: https://services3.arcgis.com
+    get:
+      summary: Describe feature layer (fixed org)
+      operationId: describeFeatureLayer
+      parameters:
+        - in: path
+          name: servicePath
+          required: true
+          schema: { type: string }
+          example: IDHUB_SummaryMaster_L
+          description: Service path segment after `/services/`.
+        - in: path
+          name: layerId
+          required: true
+          schema: { type: integer, minimum: 0 }
+          example: 0
+        - in: query
+          name: f
+          schema: { type: string, enum: [json] }
+          example: json
+      responses:
+        "200":
+          description: Layer metadata (fields, geometry, capabilities)
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+
+  /dQsP3byyKkTT53Ep/arcgis/rest/services/{servicePath}/FeatureServer/{layerId}/query:
+    servers:
+      - url: https://services3.arcgis.com
+    get:
+      summary: Query feature layer (fixed org)
+      operationId: queryFeatureLayer
+      parameters:
+        - in: path
+          name: servicePath
+          required: true
+          schema: { type: string }
+          example: IDHUB_SummaryMaster_L
+        - in: path
+          name: layerId
+          required: true
+          schema: { type: integer, minimum: 0 }
+          example: 0
+        - in: query
+          name: f
+          schema: { type: string, enum: [json] }
+          example: json
+        - in: query
+          name: where
+          schema: { type: string }
+          example: "Disease='Measles' AND epiWeek='2025W32'"
+          description: SQL-like filter.
+        - in: query
+          name: outFields
+          schema: { type: string }
+          example: "*"
+        - in: query
+          name: returnGeometry
+          schema: { type: boolean }
+          example: false
+        - in: query
+          name: groupByFieldsForStatistics
+          schema: { type: string }
+          example: "Disease,AgeGroup"
+        - in: query
+          name: outStatistics
+          schema:
+            type: string
+            description: JSON-encoded array describing aggregations (sum/count/avg…).
+          example: '[{"onStatisticField":"Value","outStatisticFieldName":"SUM_Value","statisticType":"sum"}]'
+        - in: query
+          name: orderByFields
+          schema: { type: string }
+          example: "epiWeek DESC"
+        - in: query
+          name: resultOffset
+          schema: { type: integer, minimum: 0 }
+          example: 0
+        - in: query
+          name: resultRecordCount
+          schema: { type: integer, minimum: 1 }
+          example: 50
+        - in: query
+          name: cacheHint
+          schema: { type: boolean }
+          example: true
+        - in: query
+          name: spatialRel
+          schema: { type: string }
+          example: esriSpatialRelIntersects
+      responses:
+        "200":
+          description: FeatureSet JSON
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FeatureSet"
+              examples:
+                groupedStats:
+                  summary: Grouped statistics by disease
+                  value:
+                    objectIdFieldName: ObjectId
+                    fields:
+                      - { name: "COUNT_DISEASE", type: "esriFieldTypeInteger" }
+                      - { name: "Disease", type: "esriFieldTypeString" }
+                    features:
+                      - attributes:
+                          COUNT_DISEASE: 290
+                          Disease: "Measles"
+                records:
+                  summary: Raw records example
+                  value:
+                    objectIdFieldName: OBJECTID
+                    geometryType: esriGeometryNull
+                    fields:
+                      - { name: "Disease", type: "esriFieldTypeString" }
+                      - { name: "epiWeek", type: "esriFieldTypeString" }
+                      - { name: "Value", type: "esriFieldTypeInteger" }
+                    features:
+                      - attributes:
+                          Disease: "Measles"
+                          epiWeek: "2025W32"
+                          Value: 14
+
+  # ---- Generic FeatureServer endpoints (any org) ----
+  /{orgId}/arcgis/rest/services/{servicePath}/FeatureServer/{layerId}:
+    servers:
+      - url: https://services1.arcgis.com
+      - url: https://services2.arcgis.com
+      - url: https://services3.arcgis.com
+      - url: https://services7.arcgis.com
+    get:
+      summary: Describe feature layer (generic, any org)
+      operationId: describeFeatureLayerGeneric
+      parameters:
+        - in: path
+          name: orgId
+          required: true
+          schema: { type: string }
+          example: QWdNfRs7lkPq4g4Q
+          description: ArcGIS Online org id in the services host path.
+        - in: path
+          name: servicePath
+          required: true
+          schema: { type: string }
+          example: Private_Well_Testing_Act_Summary_Results_by_County_for_New_Jersey
+          description: Segment after /services/.
+        - in: path
+          name: layerId
+          required: true
+          schema: { type: integer, minimum: 0 }
+          example: 0
+        - in: query
+          name: f
+          schema: { type: string, enum: [json] }
+          example: json
+      responses:
+        "200":
+          description: Layer metadata (fields, geometry, capabilities)
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+
+  /{orgId}/arcgis/rest/services/{servicePath}/FeatureServer/{layerId}/query:
+    servers:
+      - url: https://services1.arcgis.com
+      - url: https://services2.arcgis.com
+      - url: https://services3.arcgis.com
+      - url: https://services7.arcgis.com
+    get:
+      summary: Query feature layer (generic, any org)
+      operationId: queryFeatureLayerGeneric
+      parameters:
+        - in: path
+          name: orgId
+          required: true
+          schema: { type: string }
+          example: QWdNfRs7lkPq4g4Q
+        - in: path
+          name: servicePath
+          required: true
+          schema: { type: string }
+          example: Private_Well_Testing_Act_Summary_Results_by_County_for_New_Jersey
+        - in: path
+          name: layerId
+          required: true
+          schema: { type: integer, minimum: 0 }
+          example: 0
+        - in: query
+          name: f
+          schema: { type: string, enum: [json] }
+          example: json
+        - in: query
+          name: where
+          schema: { type: string }
+          example: "1=1"
+          description: SQL-like filter.
+        - in: query
+          name: outFields
+          schema: { type: string }
+          example: "*"
+        - in: query
+          name: returnGeometry
+          schema: { type: boolean }
+          example: false
+        - in: query
+          name: resultRecordCount
+          schema: { type: integer, minimum: 1 }
+          example: 50
+      responses:
+        "200":
+          description: FeatureSet JSON
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FeatureSet"
+
+components:
+  schemas:
+    ArcgisItem:
+      type: object
+      properties:
+        id: { type: string }
+        owner: { type: string }
+        orgId: { type: string }
+        created: { type: integer, description: "Unix epoch millis" }
+        modified: { type: integer, description: "Unix epoch millis" }
+        title: { type: string }
+        type: { type: string }
+        typeKeywords:
+          type: array
+          items: { type: string }
+        description: { type: string }
+        tags:
+          type: array
+          items: { type: string }
+      additionalProperties: true
+
+    Field:
+      type: object
+      properties:
+        name: { type: string }
+        type: { type: string }
+        alias: { type: string, nullable: true }
+        sqlType: { type: string, nullable: true }
+        length: { type: integer, nullable: true }
+        domain: { nullable: true }
+        defaultValue: { nullable: true }
+
+    Feature:
+      type: object
+      properties:
+        attributes:
+          type: object
+          additionalProperties: true
+        geometry:
+          nullable: true
+          description: Included only when returnGeometry=true.
+
+    FeatureSet:
+      type: object
+      properties:
+        objectIdFieldName: { type: string, nullable: true }
+        globalIdFieldName: { type: string, nullable: true }
+        geometryType: { type: string, nullable: true }
+        fields:
+          type: array
+          items: { $ref: "#/components/schemas/Field" }
+        features:
+          type: array
+          items: { $ref: "#/components/schemas/Feature" }

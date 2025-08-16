@@ -1,0 +1,158 @@
+openapi: 3.0.3
+info:
+  title: ArcGIS FeatureServer API (services1)
+  description: |
+    ArcGIS hosted feature services under services1.arcgis.com.
+    Use describeFeatureServer to list layers/tables, then use the layer endpoints.
+  version: "1.0.0"
+
+servers:
+  - url: https://services1.arcgis.com
+    description: ArcGIS FeatureServer (NJDEP data host)
+
+paths:
+  /{orgId}/arcgis/rest/services/{servicePath}/FeatureServer:
+    get:
+      summary: Describe feature service (list layers/tables)
+      operationId: describeFeatureServer
+      parameters:
+        - in: path
+          name: orgId
+          required: true
+          schema: { type: string }
+          example: QWdNfRs7lkPq4g4Q
+          description: ArcGIS organization ID from the service URL.
+        - in: path
+          name: servicePath
+          required: true
+          schema: { type: string }
+          example: Private_Well_Testing_Act_Summary_Results_by_County_for_New_Jersey
+          description: The segment after /services/ in the service URL.
+        - in: query
+          name: f
+          schema: { type: string, enum: [json] }
+          example: json
+      responses:
+        "200":
+          description: Service metadata (includes layers & tables arrays)
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+
+  /{orgId}/arcgis/rest/services/{servicePath}/FeatureServer/{layerId}:
+    get:
+      summary: Describe feature layer
+      operationId: describeFeatureLayerGeneric
+      parameters:
+        - in: path
+          name: orgId
+          required: true
+          schema: { type: string }
+          example: QWdNfRs7lkPq4g4Q
+          description: ArcGIS organization ID.
+        - in: path
+          name: servicePath
+          required: true
+          schema: { type: string }
+          example: Private_Well_Testing_Act_Summary_Results_by_County_for_New_Jersey
+          description: The segment after /services/ in the service URL.
+        - in: path
+          name: layerId
+          required: true
+          schema: { type: integer, minimum: 0 }
+          example: 1
+          description: The numeric layer id (get from describeFeatureServer).
+        - in: query
+          name: f
+          schema: { type: string, enum: [json] }
+          example: json
+      responses:
+        "200":
+          description: Layer metadata (fields, geometry, capabilities)
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+
+  /{orgId}/arcgis/rest/services/{servicePath}/FeatureServer/{layerId}/query:
+    get:
+      summary: Query feature layer
+      operationId: queryFeatureLayerGeneric
+      parameters:
+        - in: path
+          name: orgId
+          required: true
+          schema: { type: string }
+          example: QWdNfRs7lkPq4g4Q
+        - in: path
+          name: servicePath
+          required: true
+          schema: { type: string }
+          example: Private_Well_Testing_Act_Summary_Results_by_County_for_New_Jersey
+        - in: path
+          name: layerId
+          required: true
+          schema: { type: integer, minimum: 0 }
+          example: 1
+        - in: query
+          name: f
+          schema: { type: string, enum: [json] }
+          example: json
+        - in: query
+          name: where
+          schema: { type: string }
+          example: "1=1"
+          description: SQL-like filter.
+        - in: query
+          name: outFields
+          schema: { type: string }
+          example: "*"
+        - in: query
+          name: returnGeometry
+          schema: { type: boolean }
+          example: false
+        - in: query
+          name: resultRecordCount
+          schema: { type: integer, minimum: 1 }
+          example: 5
+      responses:
+        "200":
+          description: FeatureSet JSON
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FeatureSet"
+
+components:
+  schemas:
+    Field:
+      type: object
+      properties:
+        name: { type: string }
+        type: { type: string }
+      additionalProperties: true
+
+    Feature:
+      type: object
+      properties:
+        attributes:
+          type: object
+          additionalProperties: true
+        geometry:
+          nullable: true
+      additionalProperties: true
+
+    FeatureSet:
+      type: object
+      properties:
+        objectIdFieldName: { type: string }
+        fields:
+          type: array
+          items: { $ref: "#/components/schemas/Field" }
+        features:
+          type: array
+          items: { $ref: "#/components/schemas/Feature" }
+      additionalProperties: true

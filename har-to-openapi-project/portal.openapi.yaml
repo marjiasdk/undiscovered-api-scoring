@@ -1,0 +1,115 @@
+openapi: 3.0.3
+info:
+  title: ArcGIS Portal API
+  description: |
+    ArcGIS Portal (www.arcgis.com) endpoints for search and content metadata.
+  version: "1.0.0"
+
+servers:
+  - url: https://www.arcgis.com
+    description: ArcGIS Portal host
+
+paths:
+  /sharing/rest/search:
+    get:
+      summary: Search ArcGIS items
+      operationId: searchItems
+      parameters:
+        - in: query
+          name: q
+          schema: { type: string }
+          example: "test"
+          description: Free text search query.
+        - in: query
+          name: num
+          schema: { type: integer, minimum: 1, maximum: 100 }
+          example: 10
+          description: Number of results per page.
+        - in: query
+          name: start
+          schema: { type: integer, minimum: 1 }
+          example: 1
+          description: Starting result index.
+        - in: query
+          name: f
+          schema: { type: string, enum: [json] }
+          example: json
+          description: Response format.
+      responses:
+        "200":
+          description: Search results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total: { type: integer }
+                  start: { type: integer }
+                  num: { type: integer }
+                  nextStart: { type: integer }
+                  results:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/ArcgisItem"
+
+  /sharing/rest/content/items/{itemId}:
+    get:
+      summary: Get ArcGIS item metadata
+      operationId: getItemMetadata
+      parameters:
+        - in: path
+          name: itemId
+          required: true
+          schema: { type: string }
+          description: ArcGIS item ID (hex-like).
+        - in: query
+          name: f
+          schema: { type: string, enum: [json] }
+          example: json
+      responses:
+        "200":
+          description: Item metadata
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ArcgisItem"
+
+  /sharing/rest/content/items/{itemId}/data:
+    get:
+      summary: Get ArcGIS item data/config
+      operationId: getItemData
+      parameters:
+        - in: path
+          name: itemId
+          required: true
+          schema: { type: string }
+        - in: query
+          name: f
+          schema: { type: string, enum: [json] }
+          example: json
+      responses:
+        "200":
+          description: Item data (dashboard configuration JSON)
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+
+components:
+  schemas:
+    ArcgisItem:
+      type: object
+      properties:
+        id: { type: string }
+        owner: { type: string }
+        orgId: { type: string }
+        created: { type: integer }
+        modified: { type: integer }
+        title: { type: string }
+        type: { type: string }
+        description: { type: string }
+        tags:
+          type: array
+          items: { type: string }
+      additionalProperties: true

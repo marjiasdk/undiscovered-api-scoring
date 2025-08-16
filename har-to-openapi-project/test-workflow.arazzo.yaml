@@ -1,0 +1,14 @@
+# test-workflow.arazzo.yaml
+arazzo: 1.0.0
+info:
+  title: Test Discovered API
+  version: 1.0.0
+
+workflows:
+  - workflowId: testAPI
+    description: Test the discovered API endpoints
+    steps:
+      - stepId: search
+        operationRef: 'openapi.yaml#/operations/searchItems'
+        parameters:
+          query: "test"
