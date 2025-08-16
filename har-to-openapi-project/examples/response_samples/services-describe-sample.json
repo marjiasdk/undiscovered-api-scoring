@@ -1,0 +1,11 @@
+{
+  "currentVersion": 11.5,
+  "serviceDescription": "Example service (truncated)",
+  "layers": [
+    {
+      "id": 65,
+      "name": "Private Well Testing Act Summary Results by County for New Jersey"
+    }
+  ],
+  "tables": []
+}

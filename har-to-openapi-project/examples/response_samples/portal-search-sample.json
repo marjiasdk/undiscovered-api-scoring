@@ -1,0 +1,15 @@
+{
+  "total": 12345,
+  "start": 1,
+  "num": 1,
+  "nextStart": 2,
+  "results": [
+    {
+      "id": "abcdef1234567890abcdef1234567890",
+      "title": "Example Feature Service",
+      "type": "Feature Service",
+      "owner": "example_owner",
+      "url": "https://services1.arcgis.com/QWdNfRs7lkPq4g4Q/arcgis/rest/services/Private_Well_Testing_Act_Summary_Results_by_County_for_New_Jersey/FeatureServer"
+    }
+  ]
+}

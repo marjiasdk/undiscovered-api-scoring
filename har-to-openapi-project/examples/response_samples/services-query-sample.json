@@ -1,0 +1,40 @@
+{
+  "objectIdFieldName": "OBJECTID",
+  "geometryType": "esriGeometryPolygon",
+  "fields": [
+    {
+      "name": "OBJECTID",
+      "type": "esriFieldTypeOID"
+    },
+    {
+      "name": "COUNTY",
+      "type": "esriFieldTypeString"
+    },
+    {
+      "name": "REGION",
+      "type": "esriFieldTypeString"
+    },
+    {
+      "name": "PFAS",
+      "type": "esriFieldTypeString"
+    }
+  ],
+  "features": [
+    {
+      "attributes": {
+        "OBJECTID": 1,
+        "COUNTY": "HUNTERDON",
+        "REGION": "CENTRAL",
+        "PFAS": "4.2%, 1510 well sampled"
+      }
+    },
+    {
+      "attributes": {
+        "OBJECTID": 2,
+        "COUNTY": "SALEM",
+        "REGION": "SOUTHERN",
+        "PFAS": "5.5%, 733 well sampled"
+      }
+    }
+  ]
+}

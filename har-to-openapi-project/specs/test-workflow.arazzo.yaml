@@ -1,0 +1,92 @@
+arazzo: "1.0.0"
+info:
+  title: Portal → FeatureService Demo
+  version: "1.0.0"
+
+apis:
+  portal:
+    # Use absolute paths if you run the workflow from a different directory.
+    openapi: ./portal.openapi.yaml
+  services:
+    openapi: ./services.openapi.yaml
+
+workflows:
+  - workflowId: portal_to_featureservice
+
+    # Optional inputs so you can override defaults at runtime
+    inputs:
+      portalQuery:
+        description: ArcGIS Portal search query
+        required: false
+        default: "type:Feature Service AND owner:*"
+      orgId:
+        description: ArcGIS org hosting the Feature Service
+        required: false
+        default: "QWdNfRs7lkPq4g4Q"   # NJDEP
+      servicePath:
+        description: Service path after /services/
+        required: false
+        default: "Private_Well_Testing_Act_Summary_Results_by_County_for_New_Jersey"
+      layerId:
+        description: Numeric layer id to query
+        required: false
+        default: 65
+      where:
+        description: SQL-like filter
+        required: false
+        default: "1=1"
+      outFields:
+        description: Fields to return
+        required: false
+        default: "*"
+      limit:
+        description: Max records to return
+        required: false
+        default: 5
+
+    steps:
+      # 1) Search in the ArcGIS Portal (demonstrates portal spec usage)
+      - stepId: search
+        api: portal
+        operationId: searchItems
+        parameters:
+          q: "${inputs.portalQuery}"
+          num: 1
+          start: 1
+          f: json
+        save:
+          firstItemId: "$.results[0].id"
+          firstItemTitle: "$.results[0].title"
+
+      # 2) Fetch item metadata (often contains a 'url' to the service)
+      - stepId: getItem
+        api: portal
+        operationId: getItemMetadata
+        parameters:
+          itemId: "${search.firstItemId}"
+          f: json
+        save:
+          itemUrl: "$.url"
+          itemOwner: "$.owner"
+          itemType: "$.type"
+
+      # 3) Query a deterministic, known-good Feature Layer (NJDEP)
+      - stepId: queryLayer
+        api: services
+        operationId: queryFeatureLayerGeneric
+        parameters:
+          orgId: "${inputs.orgId}"
+          servicePath: "${inputs.servicePath}"
+          layerId: ${inputs.layerId}
+          f: json
+          where: "${inputs.where}"
+          outFields: "${inputs.outFields}"
+          returnGeometry: false
+          resultRecordCount: ${inputs.limit}
+
+    outputs:
+      portal_first_item_id: "${search.firstItemId}"
+      portal_first_item_title: "${search.firstItemTitle}"
+      portal_first_item_url: "${getItem.itemUrl}"
+      features: "$.queryLayer.body.features"
+      field_names: "$.queryLayer.body.fields[*].name"
