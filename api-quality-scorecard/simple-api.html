@@ -1,0 +1,104 @@
+
+    <html>
+    <head>
+      <meta charset="utf-8"/>
+      <title>OpenAPI Quality Report — simple-api.yaml</title>
+      <style>
+        body { font-family: Arial, sans-serif; margin: 30px; }
+        h1 { color: #2c3e50; }
+        h2 { margin-top: 28px; }
+        ul { line-height: 1.6; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        .muted { color: #666; font-size: 0.9em; }
+        .pass { color: #2e7d32; }
+        .fail { color: #c62828; }
+      </style>
+    </head>
+    <body>
+      <h1>OpenAPI Quality Report — simple-api.yaml</h1>
+      <p><strong>Overall Score:</strong> 85/100</p>
+
+      <div class="grid">
+        <div>
+          <h2>Category Scores</h2>
+          <ul>
+            
+              <li><strong>Documentation Quality</strong>: 91</li>
+            
+              <li><strong>Schema Completeness</strong>: 76</li>
+            
+              <li><strong>Agent Usability</strong>: 100</li>
+            
+              <li><strong>Error Handling</strong>: 70</li>
+            
+              <li><strong>Authentication</strong>: 90</li>
+            
+          </ul>
+        </div>
+        <div>
+          <h2>Visualization</h2>
+          <img src="simple-api_cats.png" width="100%%" />
+          
+            <p class="muted">Overall trend:</p>
+            <img src="simple-api_trend.png" width="100%%" />
+          
+        </div>
+      </div>
+
+      
+      <h2>Baseline Comparison</h2>
+      <ul>
+        
+          <li>Documentation Quality:
+            <span class="pass">
+              PASS
+            </span>
+            (Δ=+1)
+          </li>
+        
+          <li>Schema Completeness:
+            <span class="fail">
+              FAIL
+            </span>
+            (Δ=-9)
+          </li>
+        
+          <li>Agent Usability:
+            <span class="pass">
+              PASS
+            </span>
+            (Δ=+10)
+          </li>
+        
+          <li>Error Handling:
+            <span class="fail">
+              FAIL
+            </span>
+            (Δ=-10)
+          </li>
+        
+          <li>Authentication:
+            <span class="pass">
+              PASS
+            </span>
+            (Δ=+10)
+          </li>
+        
+      </ul>
+      
+        <p class="muted">Notes: Error handling below baseline; add 4xx/5xx responses with schemas.</p>
+      
+      
+
+      <h2>Issues</h2>
+      <ul>
+        <li>Parameter 'userId' in GET /users/{userId} missing description</li><li>Schema 'User' missing required fields or properties</li><li>Schema 'CreateUserRequest' missing required fields or properties</li><li>Schema 'Error' missing required fields or properties</li><li>GET /users/{userId} missing description for discoverability</li><li>POST /users missing 5xx error response</li><li>GET /users/{userId} missing 4xx error response</li><li>GET /users/{userId} missing 5xx error response</li><li>Security scheme 'BearerAuth' missing description</li><li>API documentation lacks authentication usage examples</li>
+      </ul>
+
+      <h2>Recommendations</h2>
+      <ul>
+        <li>Add description and example for parameter 'userId'.</li><li>Add required fields and properties to schema 'User'.</li><li>Add required fields and properties to schema 'CreateUserRequest'.</li><li>Add required fields and properties to schema 'Error'.</li><li>Provide detailed description for GET /users/{userId}.</li><li>Add 5xx error response for POST /users.</li><li>Add 4xx error response for GET /users/{userId}.</li><li>Add 5xx error response for GET /users/{userId}.</li><li>Add description for 'BearerAuth' auth scheme.</li><li>Add authentication usage examples in API description.</li>
+      </ul>
+    </body>
+    </html>
+    
