@@ -1,0 +1,105 @@
+{
+  "spec": "simple-api.yaml",
+  "results": {
+    "documentation_quality": {
+      "score": 91,
+      "issues": [
+        "Parameter 'userId' in GET /users/{userId} missing description"
+      ],
+      "recommendations": [
+        "Add description and example for parameter 'userId'."
+      ]
+    },
+    "schema_completeness": {
+      "score": 76,
+      "issues": [
+        "Schema 'User' missing required fields or properties",
+        "Schema 'CreateUserRequest' missing required fields or properties",
+        "Schema 'Error' missing required fields or properties"
+      ],
+      "recommendations": [
+        "Add required fields and properties to schema 'User'.",
+        "Add required fields and properties to schema 'CreateUserRequest'.",
+        "Add required fields and properties to schema 'Error'."
+      ]
+    },
+    "agent_usability": {
+      "score": 100,
+      "issues": [
+        "GET /users/{userId} missing description for discoverability"
+      ],
+      "recommendations": [
+        "Provide detailed description for GET /users/{userId}."
+      ]
+    },
+    "error_handling": {
+      "score": 70,
+      "issues": [
+        "POST /users missing 5xx error response",
+        "GET /users/{userId} missing 4xx error response",
+        "GET /users/{userId} missing 5xx error response"
+      ],
+      "recommendations": [
+        "Add 5xx error response for POST /users.",
+        "Add 4xx error response for GET /users/{userId}.",
+        "Add 5xx error response for GET /users/{userId}."
+      ]
+    },
+    "authentication": {
+      "score": 90,
+      "issues": [
+        "Security scheme 'BearerAuth' missing description",
+        "API documentation lacks authentication usage examples"
+      ],
+      "recommendations": [
+        "Add description for 'BearerAuth' auth scheme.",
+        "Add authentication usage examples in API description."
+      ]
+    },
+    "overall_score": 85,
+    "issues": [
+      "Parameter 'userId' in GET /users/{userId} missing description",
+      "Schema 'User' missing required fields or properties",
+      "Schema 'CreateUserRequest' missing required fields or properties",
+      "Schema 'Error' missing required fields or properties",
+      "GET /users/{userId} missing description for discoverability",
+      "POST /users missing 5xx error response",
+      "GET /users/{userId} missing 4xx error response",
+      "GET /users/{userId} missing 5xx error response",
+      "Security scheme 'BearerAuth' missing description",
+      "API documentation lacks authentication usage examples"
+    ],
+    "recommendations": [
+      "Add description and example for parameter 'userId'.",
+      "Add required fields and properties to schema 'User'.",
+      "Add required fields and properties to schema 'CreateUserRequest'.",
+      "Add required fields and properties to schema 'Error'.",
+      "Provide detailed description for GET /users/{userId}.",
+      "Add 5xx error response for POST /users.",
+      "Add 4xx error response for GET /users/{userId}.",
+      "Add 5xx error response for GET /users/{userId}.",
+      "Add description for 'BearerAuth' auth scheme.",
+      "Add authentication usage examples in API description."
+    ]
+  },
+  "baseline": {
+    "passes": {
+      "documentation_quality": true,
+      "schema_completeness": false,
+      "agent_usability": true,
+      "error_handling": false,
+      "authentication": true
+    },
+    "deltas": {
+      "documentation_quality": 1,
+      "schema_completeness": -9,
+      "agent_usability": 10,
+      "error_handling": -10,
+      "authentication": 10
+    },
+    "notes": [
+      "Error handling below baseline; add 4xx/5xx responses with schemas."
+    ]
+  },
+  "trend": []
+}
