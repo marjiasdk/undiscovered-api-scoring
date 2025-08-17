@@ -1,1 +1,1 @@
-give(a)go x jentic hackathon project, won 2nd place.
+jentic x give(a)go hackathon project, won 2nd place.
