@@ -182,89 +182,251 @@ def _save_bar_chart(spec_name: str, res: Dict, outfile_stem: str) -> str:
 def render_html(
     spec_name: str, res: Dict, baseline_cmp: Dict | None, trend: List, outfile: str
 ):
-    stem = os.path.splitext(outfile)[0]
-    cats_png = _save_bar_chart(spec_name, res, stem)
-    trend_png = _save_trend_chart(spec_name, trend, stem)
+    # Prepare data for charts
+    cat_labels = [name for (name, _) in category_rows(res)]
+    cat_scores = [score for (_, score) in category_rows(res)]
 
-    tpl = Template(
-        """
-    <html>
-    <head>
-      <meta charset="utf-8"/>
-      <title>OpenAPI Quality Report — {{ spec_name }}</title>
-      <style>
-        body { font-family: Arial, sans-serif; margin: 30px; }
-        h1 { color: #2c3e50; }
-        h2 { margin-top: 28px; }
-        ul { line-height: 1.6; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-        .muted { color: #666; font-size: 0.9em; }
-        .pass { color: #2e7d32; }
-        .fail { color: #c62828; }
-      </style>
-    </head>
-    <body>
-      <h1>OpenAPI Quality Report — {{ spec_name }}</h1>
-      <p><strong>Overall Score:</strong> {{ res.overall_score }}/100</p>
+    # Tiny trend arrays (timestamps -> labels)
+    tr_x = [str(t) for (t, _, _) in trend][-12:]  # last 12 points
+    tr_y = [o for (_, o, _) in trend][-12:]
 
-      <div class="grid">
-        <div>
-          <h2>Category Scores</h2>
-          <ul>
-            {% for name, score in cat_rows %}
-              <li><strong>{{ name }}</strong>: {{ score }}</li>
-            {% endfor %}
-          </ul>
-        </div>
-        <div>
-          <h2>Visualization</h2>
-          <img src="{{ cats_png }}" width="100%%" />
-          {% if trend_png %}
-            <p class="muted">Overall trend:</p>
-            <img src="{{ trend_png }}" width="100%%" />
-          {% endif %}
+    # Baseline arrays (if any)
+    bl_labels, bl_scores = [], []
+    if baseline_cmp:
+        # Use same labels order as category grid for the radar
+        key_by_label = {name.replace(" ", "_").lower(): name for name in cat_labels}
+        for k, delta in baseline_cmp["deltas"].items():
+            label = key_by_label.get(k, k.replace("_", " ").title())
+            bl_labels.append(label)
+            bl_scores.append(
+                baseline_cmp["deltas"][k]
+            )  # deltas for coloring in table; radar uses thresholds below
+    # Thresholds for radar
+    radar_thresholds = []
+    if baseline_cmp:
+        # Use your DEFAULT_BASELINE values if present in the dict
+        try:
+            from benchmarks import DEFAULT_BASELINE as _BL
+
+            for k in [l.replace(" ", "_").lower() for l in cat_labels]:
+                radar_thresholds.append(_BL["min_scores"].get(k, 80))
+        except Exception:
+            radar_thresholds = [80] * len(cat_labels)
+    else:
+        radar_thresholds = [80] * len(cat_labels)
+
+    # Pretty HTML (self-contained)
+    html = f"""<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>OpenAPI Quality Report — {spec_name}</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {{
+      --bg:#0b1220; --card:#111a2b; --muted:#a7b0c0; --text:#e9eef8; --accent:#5bbcff; --good:#19c37d; --bad:#ff6b6b; --warn:#ffd166;
+      --border: #1e2a44;
+    }}
+    @media (prefers-color-scheme: light) {{
+      :root {{
+        --bg:#f6f8fc; --card:#ffffff; --muted:#4b5563; --text:#111827; --accent:#2563eb; --good:#16a34a; --bad:#dc2626; --warn:#d97706;
+        --border:#e5e7eb;
+      }}
+    }}
+    * {{ box-sizing: border-box }}
+    body {{
+      margin: 0; padding: 32px; background: var(--bg); color: var(--text); font: 14px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
+    }}
+    .container {{ max-width: 1100px; margin: 0 auto; }}
+    .header {{
+      display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom: 18px;
+    }}
+    .title {{ font-size: 22px; font-weight: 700; letter-spacing: .2px; }}
+    .pill {{ padding:6px 10px; border-radius:999px; background:var(--card); border:1px solid var(--border); color:var(--muted); }}
+    .grid {{ display:grid; gap:16px; grid-template-columns: 1.2fr .8fr; }}
+    .card {{ background: var(--card); border:1px solid var(--border); border-radius:14px; padding:16px; }}
+    h2 {{ font-size:16px; margin:0 0 10px 0; }}
+    .row {{ display:flex; gap:10px; align-items:center; justify-content:space-between; }}
+    .progress {{
+      width: 100%; height: 10px; background: rgba(127,127,127,.15); border-radius:999px; overflow:hidden; border:1px solid var(--border);
+    }}
+    .progress > span {{
+      display:block; height:100%; background:linear-gradient(90deg, var(--accent), #9b7bff);
+    }}
+    .badge {{ font-size:12px; padding:4px 8px; border-radius:999px; border:1px solid var(--border); background: rgba(127,127,127,.12); color:var(--muted); }}
+    .badge.pass {{ color: var(--good); border-color: rgba(25,195,125,.35); background: rgba(25,195,125,.08); }}
+    .badge.fail {{ color: var(--bad); border-color: rgba(255,107,107,.35); background: rgba(255,107,107,.08); }}
+    .list {{ margin:0; padding-left: 18px; }}
+    .two {{ display:grid; grid-template-columns: 1fr 1fr; gap:16px; }}
+    details {{ border:1px solid var(--border); background:var(--card); border-radius:10px; padding:10px 12px; }}
+    details + details {{ margin-top:10px; }}
+    summary {{ cursor:pointer; color: var(--muted); font-weight:600; }}
+    .muted {{ color: var(--muted); }}
+    .table {{ width:100%; border-collapse: collapse; }}
+    .table th, .table td {{ padding:8px 10px; border-bottom:1px solid var(--border); text-align:left; }}
+    .footer {{ margin-top:18px; color: var(--muted); font-size:12px; text-align:center; }}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="title">OpenAPI Quality Report — {spec_name}</div>
+      <div class="pill">Overall Score: <b>{res['overall_score']}</b>/100</div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h2>Category Scores</h2>
+        <div style="display:grid; gap:10px;">
+          {"".join(f'''
+          <div class="row">
+            <div style="min-width:210px">{label}</div>
+            <div class="progress"><span style="width:{score}%"></span></div>
+            <div class="pill" style="min-width:54px; text-align:center">{score}</div>
+          </div>''' for label, score in category_rows(res))}
         </div>
       </div>
 
-      {% if baseline_cmp %}
-      <h2>Baseline Comparison</h2>
-      <ul>
-        {% for k, passed in baseline_cmp.passes.items() %}
-          <li>{{ k.replace('_',' ').title() }}:
-            <span class="{{ 'pass' if passed else 'fail' }}">
-              {{ 'PASS' if passed else 'FAIL' }}
-            </span>
-            (Δ={% if baseline_cmp.deltas[k] is not none %}{{ "%+d"|format(baseline_cmp.deltas[k]) }}{% else %}+0{% endif %})
-          </li>
-        {% endfor %}
-      </ul>
-      {% if baseline_cmp.notes %}
-        <p class="muted">Notes: {{ ' '.join(baseline_cmp.notes) }}</p>
-      {% endif %}
-      {% endif %}
+      <div class="card">
+        <h2>Overview</h2>
+        <canvas id="barChart" height="180"></canvas>
+        <div class="muted" style="margin-top:8px">Scores by category</div>
+      </div>
+    </div>
 
-      <h2>Issues</h2>
-      <ul>
-        {% for i in res.issues %}<li>{{ i }}</li>{% endfor %}
-      </ul>
+    <div class="two" style="margin-top:16px;">
+      <div class="card">
+        <h2>Baseline Comparison</h2>
+        {"<div class='muted'>No baseline provided</div>" if not baseline_cmp else ""}
+        {""
+          if not baseline_cmp else
+          "<table class='table'><thead><tr><th>Category</th><th>Status</th><th>Δ vs threshold</th></tr></thead><tbody>"
+          + "".join(
+            f"<tr><td>{k.replace('_',' ').title()}</td>"
+            f"<td><span class='badge {'pass' if p else 'fail'}'>{'PASS' if p else 'FAIL'}</span></td>"
+            f"<td>{'+' if baseline_cmp['deltas'][k] >= 0 else ''}{baseline_cmp['deltas'][k]}</td></tr>"
+            for k, p in baseline_cmp['passes'].items()
+          )
+          + "</tbody></table>"
+        }
+        <div style="margin-top:10px;">
+          {"".join(f"<span class='badge' style='margin-right:6px'>{note}</span>" for note in (baseline_cmp.get('notes') or []))}
+        </div>
+      </div>
 
-      <h2>Recommendations</h2>
-      <ul>
-        {% for r in res.recommendations %}<li>{{ r }}</li>{% endfor %}
-      </ul>
-    </body>
-    </html>
-    """
-    )
+      <div class="card">
+        <h2>Benchmark Radar</h2>
+        <canvas id="radarChart" height="200"></canvas>
+        <div class="muted" style="margin-top:8px">Your score vs baseline thresholds</div>
+      </div>
+    </div>
 
-    html = tpl.render(
-        spec_name=spec_name,
-        res=res,
-        baseline_cmp=baseline_cmp,
-        cat_rows=category_rows(res),
-        cats_png=os.path.basename(cats_png),
-        trend_png=os.path.basename(trend_png) if trend_png else None,
-    )
+    <div class="two" style="margin-top:16px;">
+      <div class="card">
+        <h2>Issues</h2>
+        {"<div class='muted'>No issues found 🎉</div>" if not res.get('issues') else ""}
+        {"".join(f"<details><summary>{i.split(':')[0]}</summary><div class='muted' style='margin-top:8px'>{i}</div></details>" for i in res.get('issues', []))}
+      </div>
+      <div class="card">
+        <h2>Recommendations</h2>
+        {"<div class='muted'>No recommendations</div>" if not res.get('recommendations') else ""}
+        {"".join(f"<details><summary>{r.split(':')[0]}</summary><div class='muted' style='margin-top:8px'>{r}</div></details>" for r in res.get('recommendations', []))}
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <h2>Trend</h2>
+      <canvas id="trendChart" height="170"></canvas>
+      <div class="muted" style="margin-top:8px">Overall score across runs (history)</div>
+    </div>
+
+    <div class="footer">Generated by API Quality Scorecard</div>
+  </div>
+
+  <script>
+    const catLabels = {json.dumps(cat_labels)};
+    const catScores = {json.dumps(cat_scores)};
+    const trendX = {json.dumps(tr_x)};
+    const trendY = {json.dumps(tr_y)};
+    const thresholds = {json.dumps(radar_thresholds)};
+
+    // Category bar
+    new Chart(document.getElementById('barChart'), {{
+      type: 'bar',
+      data: {{
+        labels: catLabels,
+        datasets: [{{
+          label: 'Score',
+          data: catScores,
+          borderWidth: 1
+        }}]
+      }},
+      options: {{
+        plugins: {{ legend: {{ display:false }} }},
+        scales: {{
+          y: {{ beginAtZero:true, max:100 }}
+        }}
+      }}
+    }});
+
+    // Trend line (render only if we have 2+ points)
+    if (trendY.length >= 2) {{
+      new Chart(document.getElementById('trendChart'), {{
+        type: 'line',
+        data: {{
+          labels: trendX,
+          datasets: [{{
+            label: 'Overall',
+            data: trendY,
+            fill: false,
+            tension: .25
+          }}]
+        }},
+        options: {{
+          plugins: {{ legend: {{ display:false }} }},
+          scales: {{
+            y: {{ beginAtZero:true, max:100 }}
+          }}
+        }}
+      }});
+    }} else {{
+      document.getElementById('trendChart').replaceWith((() => {{
+        const d = document.createElement('div');
+        d.className = 'muted';
+        d.style.padding = '8px 0';
+        d.textContent = 'No history yet — run with --update-history a few times';
+        return d;
+      }})());
+    }}
+
+    // Radar chart (scores vs thresholds)
+    new Chart(document.getElementById('radarChart'), {{
+      type: 'radar',
+      data: {{
+        labels: catLabels,
+        datasets: [
+          {{
+            label: 'Your score',
+            data: catScores
+          }},
+          {{
+            label: 'Baseline threshold',
+            data: thresholds
+          }}
+        ]
+      }},
+      options: {{
+        plugins: {{ legend: {{ display: true }} }},
+        scales: {{
+          r: {{ suggestedMin: 0, suggestedMax: 100, ticks: {{ stepSize: 20 }} }}
+        }}
+      }}
+    }});
+  </script>
+</body>
+</html>
+"""
     Path(outfile).write_text(html, encoding="utf-8")
     print(f"✅ HTML report saved to {outfile}")
 

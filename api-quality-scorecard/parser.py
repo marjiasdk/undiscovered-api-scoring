@@ -119,3 +119,19 @@ class OpenAPIParser:
             f"  Paths: {num_paths}\n"
             f"  Schemas: {num_schemas}\n"
         )
+
+    @classmethod
+    def from_string(cls, text: str):
+        """Parse YAML or JSON spec content and return the loaded dict."""
+        try:
+            # Try YAML first (it also accepts JSON by default, but we’ll be explicit)
+            data = yaml.safe_load(text)
+            if not isinstance(data, dict):
+                raise ValueError("Spec content did not parse to an object")
+            return data
+        except Exception:
+            # Fallback to JSON
+            data = json.loads(text)
+            if not isinstance(data, dict):
+                raise ValueError("Spec content did not parse to an object")
+            return data

@@ -25,3 +25,5 @@ requests>=2.28.0  # For fetching remote specs
 # Optional: Advanced analysis
 textstat>=0.7.0  # For text readability analysis
 nltk>=3.8.0  # For natural language processing (optional)
+
+streamlit>=1.33
